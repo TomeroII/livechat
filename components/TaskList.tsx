@@ -1,1 +1,1 @@
-"use cilent"
+"use client";
