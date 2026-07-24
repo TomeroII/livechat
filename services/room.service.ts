@@ -1,5 +1,5 @@
 import { api } from "./api";
-import { Room } from "@/app/types/room";
+import { Room } from "@/types/room";
 
 export async function listRooms(): Promise<Room[]> {
   const { data } = await api.get<Room[]>("/rooms");

@@ -9,7 +9,7 @@ let socket: Socket | null = null;
  */
 export function getSocket(): Socket {
   if (!socket) {
-    socket = io(process.env.NEXT_PUBLIC_SOCKET_URL ?? "http://localhost:1904", {
+    socket = io(process.env.NEXT_PUBLIC_SOCKET_URL ?? "http://localhost:3000", {
       withCredentials: true,
       autoConnect: false,
     });

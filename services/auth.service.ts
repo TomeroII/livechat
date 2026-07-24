@@ -1,5 +1,5 @@
 import { api } from "./api";
-import { User } from "@/app/types/user";
+import { User } from "@/types/user";
 
 export interface RegisterPayload {
   name: string;

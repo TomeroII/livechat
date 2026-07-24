@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Avatar, Tooltip } from "antd";
 import { CheckOutlined, SmileOutlined, RollbackOutlined } from "@ant-design/icons";
-import { Message, DeliveryState } from "@/app/types/message";
-import { User } from "@/app/types/user";
+import { Message, DeliveryState } from "@/types/message";
+import { User } from "@/types/user";
 import { getMessageById, getUserById } from "@/lib/mock-data";
 
 const QUICK_REACTIONS = ["👍", "❤️", "😂", "👀", "🎉"];

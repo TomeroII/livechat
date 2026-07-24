@@ -1,4 +1,4 @@
-import { PresenceStatus } from "@/app/types/user";
+import { PresenceStatus } from "@/types/user";
 
 const PRESENCE_COLOR: Record<PresenceStatus, string> = {
   online: "#2DD4BF",

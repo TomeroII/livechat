@@ -6,7 +6,7 @@ import axios from "axios";
  * host/port (e.g. http://localhost:4000). Falls back to 4000 for local dev.
  */
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000/api",
   withCredentials: true,
 });
 

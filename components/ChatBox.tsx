@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Input, Button, Tooltip } from "antd";
 import { SendOutlined, SearchOutlined, CloseOutlined, SmileOutlined, PaperClipOutlined } from "@ant-design/icons";
 import MessageBubble from "./MessageBubble";
-import { Message } from "@/app/types/message";
+import { Message } from "@/types/message";
 import { getUserById, currentUser } from "@/lib/mock-data";
 
 const { TextArea } = Input;

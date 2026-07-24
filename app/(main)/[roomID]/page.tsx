@@ -1,7 +1,7 @@
-import NotFound from "@/app/not-found";
+import notFound from "@/app/not-found";
 import RoomView from "@/components/RoomView";
 import { getRoomById, getUserById, getTasksByRoom, getMessagesByRoom } from "@/lib/mock-data";
-import { Room } from "@/app/types/room";
+import { Room } from "@/types/room";
 
 export default async function RoomPage({
   params,
@@ -13,7 +13,10 @@ export default async function RoomPage({
   if (roomId.startsWith("dm-")) {
     const userId = roomId.slice(3);
     const user = getUserById(userId);
-    if (!user) notFound();
+    if (!user) {
+      notFound();
+      return null;
+    }
 
     const dmRoom: Room = {
       id: roomId,
@@ -33,7 +36,10 @@ export default async function RoomPage({
   }
 
   const room = getRoomById(roomId);
-  if (!room) notFound();
+  if (!room) {
+    notFound();
+    return null;
+  }
 
   return <RoomView room={room} tasks={getTasksByRoom(roomId)} messages={getMessagesByRoom(roomId)} />;
 }

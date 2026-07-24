@@ -1,6 +1,6 @@
 import { Avatar, Button, Tag } from "antd";
 import { TeamOutlined, CheckCircleOutlined } from "@ant-design/icons";
-import { Room } from "@/app/types/room";
+import { Room } from "@/types/room";
 
 const CATEGORY_LABEL: Record<Room["category"], string> = {
   study: "Study group",
