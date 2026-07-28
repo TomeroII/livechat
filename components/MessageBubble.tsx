@@ -45,7 +45,7 @@ export default function MessageBubble({
 
   return (
     <div
-      className="group relative flex gap-3 px-5 py-0.5 hover:bg-[var(--color-bg-elevated)] rounded-lg"
+      className="group relative flex gap-3 px-5 py-0.5 hover:bg-bg-elevated rounded-lg"
       style={{ marginTop: showHeader ? 14 : 0 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => {
