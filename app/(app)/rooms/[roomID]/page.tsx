@@ -6,17 +6,17 @@ import { Room } from "@/types/room";
 export default async function RoomPage({
   params,
 }: {
-  params: Promise<{ roomId: string }>;
+  params: Promise<{ roomID: string }>;
 }) {
-  const { roomId } = await params;
+  const { roomID } = await params;
 
-  if (roomId.startsWith("dm-")) {
-    const userId = roomId.slice(3);
+  if (roomID.startsWith("dm-")) {
+    const userId = roomID.slice(3);
     const user = getUserById(userId);
     if (!user) notFound();
 
     const dmRoom: Room = {
-      id: roomId,
+      id: roomID,
       name: user.name,
       topic: "Direct message",
       category: "general",
@@ -32,8 +32,8 @@ export default async function RoomPage({
     return <RoomView room={dmRoom} tasks={[]} messages={[]} />;
   }
 
-  const room = getRoomById(roomId);
+  const room = getRoomById(roomID);
   if (!room) notFound();
 
-  return <RoomView room={room} tasks={getTasksByRoom(roomId)} messages={getMessagesByRoom(roomId)} />;
+  return <RoomView room={room} tasks={getTasksByRoom(roomID)} messages={getMessagesByRoom(roomID)} />;
 }

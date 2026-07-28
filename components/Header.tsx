@@ -8,10 +8,10 @@ import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { name: "Discover", href: "/livechat/app/(main)/Discover/page.tsx" },
-  { name: "Developers", href: "/livechat/app/(main)/Developers/page.tsx" },
-  { name: "Download", href: "/livechat/app/(main)/Download/page.tsx" },
-  { name: "Safety", href: "/livechat/app//(main)/Safety/page.tsx" },
+  { name: "Discover", href: "/livechat/app/(main)/Discover" },
+  { name: "Developers", href: "/livechat/app/(main)/Developers" },
+  { name: "Download", href: "/livechat/app/(main)/Download" },
+  { name: "Safety", href: "/livechat/app//(main)/Safety" },
 ];
 
 function Wordmark() {

@@ -1,7 +1,7 @@
 export default function NotFound() {
   return (
     <div>
-      this is a not found page.
+      404 not found fuck nigga, do something right.
     </div>
   )
 }

@@ -62,8 +62,8 @@ export default function RoomSidebar() {
         <SectionLabel>Rooms</SectionLabel>
         <div className="flex flex-col gap-0.5">
           {filteredRooms.map((room) => (
-            <Link key={room.id} href={`/rooms/${room.id}`}>
-              <Row active={pathname === `/rooms/${room.id}`}>
+            <Link key={room.id} href={`/livechat/app/(app)/rooms/[roomID]/page.tsx${room.id}`}>
+              <Row active={pathname === `/livechat/app/(app)/rooms/[roomID]/page.tsx${room.id}`}>
                 <Avatar
                   shape="square"
                   size={30}

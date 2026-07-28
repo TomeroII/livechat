@@ -4,9 +4,9 @@ const columns = [
   {
     title: "Product",
     links: [
-      { name: "Discover rooms", href: "/discover" },
-      { name: "Download", href: "/download" },
-      { name: "Developers", href: "/developers" },
+      { name: "Discover rooms", href: "/livechat/app/(main)/Discover" },
+      { name: "Download", href: "/livechat/app/(main)/Download" },
+      { name: "Developers", href: "/livechat/app/(main)/Developers" },
     ],
   },
   {
@@ -60,7 +60,7 @@ export default function Footer() {
           className="max-w-7xl mx-auto px-6 py-6 text-xs"
           style={{ color: "var(--color-text-faint)", fontFamily: "var(--font-mono)" }}
         >
-          © 2026 LiveChat. Built by 24CT114.
+          © 2026 LiveChat. Built by Minh Giang.
         </p>
       </div>
     </footer>
