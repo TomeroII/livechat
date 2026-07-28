@@ -1,4 +1,4 @@
-import notFound from "@/app/not-found";
+import { notFound } from "next/navigation";
 import RoomView from "@/components/RoomView";
 import { getRoomById, getUserById, getTasksByRoom, getMessagesByRoom } from "@/lib/mock-data";
 import { Room } from "@/types/room";
@@ -6,20 +6,17 @@ import { Room } from "@/types/room";
 export default async function RoomPage({
   params,
 }: {
-  params: Promise<{ roomID: string }>;
+  params: Promise<{ roomId: string }>;
 }) {
-  const { roomID } = await params;
+  const { roomId } = await params;
 
-  if (roomID.startsWith("dm-")) {
-    const userId = roomID.slice(3);
+  if (roomId.startsWith("dm-")) {
+    const userId = roomId.slice(3);
     const user = getUserById(userId);
-    if (!user) {
-      notFound();
-      return null;
-    }
+    if (!user) notFound();
 
     const dmRoom: Room = {
-      id: roomID,
+      id: roomId,
       name: user.name,
       topic: "Direct message",
       category: "general",
@@ -35,11 +32,8 @@ export default async function RoomPage({
     return <RoomView room={dmRoom} tasks={[]} messages={[]} />;
   }
 
-  const room = getRoomById(roomID);
-  if (!room) {
-    notFound();
-    return null;
-  }
+  const room = getRoomById(roomId);
+  if (!room) notFound();
 
-  return <RoomView room={room} tasks={getTasksByRoom(roomID)} messages={getMessagesByRoom(roomID)} />;
+  return <RoomView room={room} tasks={getTasksByRoom(roomId)} messages={getMessagesByRoom(roomId)} />;
 }
