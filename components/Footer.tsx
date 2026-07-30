@@ -4,15 +4,14 @@ const columns = [
   {
     title: "Product",
     links: [
-      { name: "Discover rooms", href: "/livechat/app/(main)/Discover" },
-      { name: "Download", href: "/livechat/app/(main)/Download" },
-      { name: "Developers", href: "/livechat/app/(main)/Developers" },
+      { name: "Discover rooms", href: "/discover" },
+      { name: "Download", href: "/download" },
+      { name: "Developers", href: "/developers" },
     ],
   },
   {
     title: "Company",
     links: [
-      { name: "Careers", href: "/career" },
       { name: "Safety", href: "/safety" },
     ],
   },
