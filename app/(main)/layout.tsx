@@ -9,7 +9,7 @@ export default function MarketingLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1" style={{ paddingTop: 72 }}>
+      <main className="w-full flex-1 pt-18">
         {children}
       </main>
       <Footer />

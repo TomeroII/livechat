@@ -8,12 +8,11 @@ import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
-  { name: "Discover", href: "/livechat/app/(main)/Discover" },
-  { name: "Developers", href: "/livechat/app/(main)/Developers" },
-  { name: "Download", href: "/livechat/app/(main)/Download" },
-  { name: "Safety", href: "/livechat/app//(main)/Safety" },
+  { name: "Discover", href: "/discover" },
+  { name: "Developers", href: "/developers" },
+  { name: "Download", href: "/download" },
+  { name: "Safety", href: "/safety" },
 ];
-
 function Wordmark() {
   return (
     <Link href="/" className="flex items-center gap-0.5 group" aria-label="LiveChat home">
@@ -96,7 +95,7 @@ export default function Header() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         closeIcon={<CloseOutlined style={{ color: "var(--color-text-primary)" }} />}
-        width={280}
+        size={280}
         styles={{ body: { padding: 24 } }}
       >
         <Space direction="vertical" size={20} style={{ width: "100%" }}>
