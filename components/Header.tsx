@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button, Drawer, Space } from "antd";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import ThemeToggle from "./ThemeToggle";
+import { useAuth } from "./AuthProvider";
 
 const navLinks = [
   { name: "Discover", href: "/discover" },
@@ -35,6 +36,7 @@ function Wordmark() {
 export default function Header() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
 
   return (
     <header
@@ -69,14 +71,27 @@ export default function Header() {
 
         <Space size={12} className="hidden md:flex">
           <ThemeToggle />
-          <Link href="/login">
-            <Button type="text" style={{ color: "var(--color-text-primary)" }}>
-              Log in
-            </Button>
-          </Link>
-          <Link href="/login?mode=register">
-            <Button type="primary">Get started</Button>
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/rooms">
+                <Button type="primary">{user?.name ?? "Open rooms"}</Button>
+              </Link>
+              <Button type="text" onClick={logout} style={{ color: "var(--color-text-primary)" }}>
+                Log out
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="/login">
+                <Button type="text" style={{ color: "var(--color-text-primary)" }}>
+                  Log in
+                </Button>
+              </Link>
+              <Link href="/login?mode=register">
+                <Button type="primary">Get started</Button>
+              </Link>
+            </>
+          )}
         </Space>
 
         <Space size={4} className="md:hidden">
@@ -112,14 +127,35 @@ export default function Header() {
           ))}
           <div style={{ borderTop: "1px solid var(--color-border)", paddingTop: 20 }}>
             <Space direction="vertical" size={12} style={{ width: "100%" }}>
-              <Link href="/login" onClick={() => setDrawerOpen(false)}>
-                <Button block>Log in</Button>
-              </Link>
-              <Link href="/login?mode=register" onClick={() => setDrawerOpen(false)}>
-                <Button block type="primary">
-                  Get started
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href="/rooms" onClick={() => setDrawerOpen(false)}>
+                    <Button block type="primary">
+                      Open rooms
+                    </Button>
+                  </Link>
+                  <Button
+                    block
+                    onClick={() => {
+                      logout();
+                      setDrawerOpen(false);
+                    }}
+                  >
+                    Log out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" onClick={() => setDrawerOpen(false)}>
+                    <Button block>Log in</Button>
+                  </Link>
+                  <Link href="/login?mode=register" onClick={() => setDrawerOpen(false)}>
+                    <Button block type="primary">
+                      Get started
+                    </Button>
+                  </Link>
+                </>
+              )}
             </Space>
           </div>
         </Space>

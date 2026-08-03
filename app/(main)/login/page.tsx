@@ -5,12 +5,14 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Form, Input, Button, Tabs, App as AntdApp } from "antd";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
-import { login, register } from "@/services/auth.service";
+import { login as loginRequest, register as registerRequest } from "@/services/auth.service";
+import { useAuth } from "@/components/AuthProvider";
 
 type Mode = "login" | "register";
 
 function LoginForm({ onSubmitted }: { onSubmitted: () => void }) {
   const { message } = AntdApp.useApp();
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
 
   return (
@@ -19,7 +21,8 @@ function LoginForm({ onSubmitted }: { onSubmitted: () => void }) {
       onFinish={async (values) => {
         setLoading(true);
         try {
-          await login(values);
+          const user = await loginRequest(values);
+          login(user);
           onSubmitted();
         } catch {
           // Backend isn't wired up yet — this is expected until YUH's
@@ -45,6 +48,7 @@ function LoginForm({ onSubmitted }: { onSubmitted: () => void }) {
 
 function RegisterForm({ onSubmitted }: { onSubmitted: () => void }) {
   const { message } = AntdApp.useApp();
+  const { login } = useAuth();
   const [loading, setLoading] = useState(false);
 
   return (
@@ -53,7 +57,8 @@ function RegisterForm({ onSubmitted }: { onSubmitted: () => void }) {
       onFinish={async (values) => {
         setLoading(true);
         try {
-          await register(values);
+          const user = await registerRequest({ ...values, role: "member" });
+          login(user);
           onSubmitted();
         } catch {
           message.info("Backend isn't connected yet — this form is ready to wire up.");

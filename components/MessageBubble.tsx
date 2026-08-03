@@ -30,6 +30,7 @@ export default function MessageBubble({
   isOwn,
   onReply,
   onReact,
+  canInteract = true,
 }: {
   message: Message;
   author: User | undefined;
@@ -37,6 +38,7 @@ export default function MessageBubble({
   isOwn: boolean;
   onReply: (message: Message) => void;
   onReact: (messageId: string, emoji: string) => void;
+  canInteract?: boolean;
 }) {
   const [hovered, setHovered] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -112,7 +114,7 @@ export default function MessageBubble({
         )}
       </div>
 
-      {hovered && (
+      {hovered && canInteract && (
         <div
           className="absolute -top-3 right-4 flex items-center gap-0.5 px-1 py-1 rounded-lg z-10"
           style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}

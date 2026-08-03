@@ -5,6 +5,7 @@ import { Checkbox, Segmented, Input, Avatar, Tooltip } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Task, TaskPriority } from "@/types/task";
 import { getUserById } from "@/lib/mock-data";
+import { useAuth } from "./AuthProvider";
 
 const PRIORITY_COLOR: Record<TaskPriority, string> = {
   high: "var(--color-danger)",
@@ -13,6 +14,7 @@ const PRIORITY_COLOR: Record<TaskPriority, string> = {
 };
 
 export default function TaskList({ roomId, initialTasks }: { roomId: string; initialTasks: Task[] }) {
+  const { isAuthenticated } = useAuth();
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [filter, setFilter] = useState<"all" | "active" | "done">("all");
   const [newTitle, setNewTitle] = useState("");
@@ -24,11 +26,13 @@ export default function TaskList({ roomId, initialTasks }: { roomId: string; ini
   }, [tasks, filter]);
 
   function toggle(id: string) {
+    if (!isAuthenticated) return;
     setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
     // TODO: replace with toggleTask(id, !task.done) from app/services/task.service.ts
   }
 
   function addTask() {
+    if (!isAuthenticated) return;
     const title = newTitle.trim();
     if (!title) return;
     setTasks((prev) => [
@@ -67,7 +71,7 @@ export default function TaskList({ roomId, initialTasks }: { roomId: string; ini
           const assignee = task.assigneeId ? getUserById(task.assigneeId) : undefined;
           return (
             <div key={task.id} className="flex items-start gap-2.5 px-2 py-2 rounded-lg hover:bg-[var(--color-bg-elevated)]">
-              <Checkbox checked={task.done} onChange={() => toggle(task.id)} style={{ marginTop: 2 }} />
+              <Checkbox checked={task.done} disabled={!isAuthenticated} onChange={() => toggle(task.id)} style={{ marginTop: 2 }} />
               <div className="flex-1 min-w-0">
                 <p
                   className="text-sm leading-snug"
@@ -112,6 +116,7 @@ export default function TaskList({ roomId, initialTasks }: { roomId: string; ini
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           onPressEnter={addTask}
+          disabled={!isAuthenticated}
         />
       </div>
     </div>

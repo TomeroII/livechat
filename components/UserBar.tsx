@@ -1,17 +1,21 @@
 "use client";
 
-import { Avatar, Dropdown, Badge } from "antd";
+import Link from "next/link";
+import { Avatar, Dropdown, Badge, Button } from "antd";
 import { SettingOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import PresenceDot, { PRESENCE_LABEL } from "./PresenceDot";
 import ThemeToggle from "./ThemeToggle";
 import { currentUser } from "@/lib/mock-data";
 import { PresenceStatus } from "@/types/user";
+import { useAuth } from "./AuthProvider";
 
 const PRESENCE_OPTIONS: PresenceStatus[] = ["online", "focusing", "away", "offline"];
 
 export default function UserBar() {
+  const { user, isAuthenticated, logout } = useAuth();
   const [presence, setPresence] = useState<PresenceStatus>(currentUser.presence);
+  const displayUser = user ?? currentUser;
 
   return (
     <div
@@ -20,6 +24,7 @@ export default function UserBar() {
     >
       <Dropdown
         trigger={["click"]}
+        disabled={!isAuthenticated}
         menu={{
           items: PRESENCE_OPTIONS.map((status) => ({
             key: status,
@@ -36,24 +41,32 @@ export default function UserBar() {
           <Badge dot={false} offset={[-4, 32]}>
             <Avatar
               size={36}
-              style={{ background: currentUser.avatarColor, color: "#14141C", fontWeight: 700 }}
+              style={{ background: displayUser.avatarColor, color: "#14141C", fontWeight: 700 }}
             >
-              {currentUser.name[0]}
+              {displayUser.name[0]}
             </Avatar>
           </Badge>
         </div>
       </Dropdown>
 
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium truncate">{currentUser.name}</p>
+        <p className="text-sm font-medium truncate">{isAuthenticated ? displayUser.name : "Guest mode"}</p>
         <p className="text-xs flex items-center gap-1.5 truncate" style={{ color: "var(--color-text-faint)" }}>
           <PresenceDot status={presence} size={7} />
-          {PRESENCE_LABEL[presence]}
+          {isAuthenticated ? PRESENCE_LABEL[presence] : "Read-only"}
         </p>
       </div>
 
       <ThemeToggle compact />
-      <SettingOutlined style={{ color: "var(--color-text-faint)", fontSize: 15, cursor: "pointer" }} />
+      {isAuthenticated ? (
+        <SettingOutlined onClick={logout} style={{ color: "var(--color-text-faint)", fontSize: 15, cursor: "pointer" }} />
+      ) : (
+        <Link href="/login">
+          <Button size="small" type="primary">
+            Log in
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }

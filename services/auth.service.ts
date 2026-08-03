@@ -16,14 +16,26 @@ export interface LoginPayload {
 // Paths assume routes/auth.routes.js mounts POST /register and POST /login.
 // Adjust here if you mount them differently in server.js.
 
-export async function register(payload: RegisterPayload): Promise<User> {
-  const { data } = await api.post<User>("/auth/register", payload);
-  return data;
+interface AuthResponse {
+  user?: Partial<User>;
+  success?: boolean;
 }
 
-export async function login(payload: LoginPayload): Promise<User> {
-  const { data } = await api.post<User>("/auth/login", payload);
-  return data;
+function readUser(data: User | AuthResponse): Partial<User> {
+  const payload = data as Record<string, unknown>;
+  return payload.user && typeof payload.user === "object"
+    ? (payload.user as Partial<User>)
+    : (data as Partial<User>);
+}
+
+export async function register(payload: RegisterPayload): Promise<Partial<User>> {
+  const { data } = await api.post<User | AuthResponse>("/auth/register", payload);
+  return readUser(data);
+}
+
+export async function login(payload: LoginPayload): Promise<Partial<User>> {
+  const { data } = await api.post<User | AuthResponse>("/auth/login", payload);
+  return readUser(data);
 }
 
 export async function logout(): Promise<void> {

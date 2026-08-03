@@ -6,6 +6,7 @@ import { SendOutlined, SearchOutlined, CloseOutlined, SmileOutlined, PaperClipOu
 import MessageBubble from "./MessageBubble";
 import { Message } from "@/types/message";
 import { getUserById, currentUser } from "@/lib/mock-data";
+import { useAuth } from "./AuthProvider";
 
 const { TextArea } = Input;
 
@@ -16,6 +17,7 @@ export default function ChatBox({
   roomId: string;
   initialMessages: Message[];
 }) {
+  const { isAuthenticated } = useAuth();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [draft, setDraft] = useState("");
   const [replyTo, setReplyTo] = useState<Message | null>(null);
@@ -28,6 +30,7 @@ export default function ChatBox({
   }, [messages.length]);
 
   function send() {
+    if (!isAuthenticated) return;
     const content = draft.trim();
     if (!content) return;
     const next: Message = {
@@ -46,6 +49,7 @@ export default function ChatBox({
   }
 
   function react(messageId: string, emoji: string) {
+    if (!isAuthenticated) return;
     setMessages((prev) =>
       prev.map((m) => {
         if (m.id !== messageId) return m;
@@ -130,8 +134,11 @@ export default function ChatBox({
                 author={author}
                 showHeader={showHeader}
                 isOwn={message.authorId === currentUser.id}
-                onReply={setReplyTo}
+                onReply={(message) => {
+                  if (isAuthenticated) setReplyTo(message);
+                }}
                 onReact={react}
+                canInteract={isAuthenticated}
               />
             );
           })
@@ -155,11 +162,17 @@ export default function ChatBox({
           style={{ background: "var(--color-bg-elevated)", border: "1px solid var(--color-border)" }}
         >
           <Tooltip title="Attach (not wired up yet)">
-            <Button type="text" shape="circle" size="small" icon={<PaperClipOutlined style={{ color: "var(--color-text-faint)" }} />} />
+            <Button
+              type="text"
+              shape="circle"
+              size="small"
+              disabled={!isAuthenticated}
+              icon={<PaperClipOutlined style={{ color: "var(--color-text-faint)" }} />}
+            />
           </Tooltip>
           <TextArea
             autoSize={{ minRows: 1, maxRows: 6 }}
-            placeholder="Message the room…"
+            placeholder={isAuthenticated ? "Message the room…" : "Log in to message this room"}
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
             onKeyDown={(e) => {
@@ -169,12 +182,19 @@ export default function ChatBox({
               }
             }}
             variant="borderless"
+            disabled={!isAuthenticated}
             style={{ resize: "none", padding: 0 }}
           />
           <Tooltip title="Emoji (not wired up yet)">
-            <Button type="text" shape="circle" size="small" icon={<SmileOutlined style={{ color: "var(--color-text-faint)" }} />} />
+            <Button
+              type="text"
+              shape="circle"
+              size="small"
+              disabled={!isAuthenticated}
+              icon={<SmileOutlined style={{ color: "var(--color-text-faint)" }} />}
+            />
           </Tooltip>
-          <Button type="primary" shape="circle" icon={<SendOutlined />} onClick={send} disabled={!draft.trim()} />
+          <Button type="primary" shape="circle" icon={<SendOutlined />} onClick={send} disabled={!isAuthenticated || !draft.trim()} />
         </div>
       </div>
     </div>

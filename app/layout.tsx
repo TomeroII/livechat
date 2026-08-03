@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ThemeModeProvider from "@/components/ThemeModeProvider";
+import AuthProvider from "@/components/AuthProvider";
 import "./globals.css";
 
 const display = Space_Grotesk({
@@ -49,7 +50,9 @@ export default function RootLayout({
       </head>
       <body>
         <AntdRegistry>
-          <ThemeModeProvider>{children}</ThemeModeProvider>
+          <ThemeModeProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ThemeModeProvider>
         </AntdRegistry>
       </body>
     </html>

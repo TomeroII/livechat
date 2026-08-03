@@ -64,7 +64,7 @@ export const mockRooms: Room[] = [
   },
   {
     id: "r4",
-    name: "24CT114 General",
+    name: "24CT113 General",
     topic: "Class announcements",
     category: "general",
     color: "#FF6B6B",
