@@ -30,7 +30,7 @@ export default function RoomRail() {
           const active = pathname === `/rooms/${room.id}`;
           return (
             <Tooltip key={room.id} title={room.name} placement="right">
-              <Link href={`/livechat/app/(app)/rooms/[roomID]/page.tsx${room.id}`}>
+              <Link href={`/rooms/${room.id}`}>
                 <RailButton active={active}>
                   <Avatar
                     shape="square"
