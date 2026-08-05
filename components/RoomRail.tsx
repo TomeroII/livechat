@@ -8,7 +8,7 @@ import { mockRooms } from "@/lib/mock-data";
 
 export default function RoomRail() {
   const pathname = usePathname();
-  const onDMs = pathname === "/livechat/app/(main)/roomID/page.tsx" || pathname === "/livechat/app/(main)/roomID/page.tsx";
+  const onDMs = pathname === "/rooms" || pathname === "/rooms";
 
   return (
     <nav
