@@ -34,7 +34,7 @@ function LoginForm({ onSubmitted }: { onSubmitted: () => void }) {
       }}
     >
       <Form.Item name="email" label="Email" rules={[{ required: true, type: "email", message: "Enter a valid email" }]}>
-        <Input prefix={<MailOutlined style={{ color: "var(--color-text-faint)" }} />} placeholder="you@lhu.edu.vn" size="large" />
+        <Input prefix={<MailOutlined style={{ color: "var(--color-text-faint)" }} />} placeholder="Your email here" size="large" />
       </Form.Item>
       <Form.Item name="password" label="Password" rules={[{ required: true, min: 8, message: "At least 8 characters" }]}>
         <Input.Password prefix={<LockOutlined style={{ color: "var(--color-text-faint)" }} />} placeholder="••••••••" size="large" />
@@ -71,7 +71,7 @@ function RegisterForm({ onSubmitted }: { onSubmitted: () => void }) {
         <Input prefix={<UserOutlined style={{ color: "var(--color-text-faint)" }} />} placeholder="Giang" size="large" />
       </Form.Item>
       <Form.Item name="email" label="Email" rules={[{ required: true, type: "email", message: "Enter a valid email" }]}>
-        <Input prefix={<MailOutlined style={{ color: "var(--color-text-faint)" }} />} placeholder="you@lhu.edu.vn" size="large" />
+        <Input prefix={<MailOutlined style={{ color: "var(--color-text-faint)" }} />} placeholder="Your email here" size="large" />
       </Form.Item>
       <Form.Item
         name="password"
@@ -137,8 +137,8 @@ function LoginPageInner() {
             activeKey={mode}
             onChange={(k) => setMode(k as Mode)}
             items={[
-              { key: "login", label: "Log in", children: <LoginForm onSubmitted={() => router.push("/rooms")} /> },
-              { key: "register", label: "Sign up", children: <RegisterForm onSubmitted={() => router.push("/rooms")} /> },
+              { key: "login", label: "Log in", children: <LoginForm onSubmitted={() => router.push("/rooms/")} /> },
+              { key: "register", label: "Sign up", children: <RegisterForm onSubmitted={() => router.push("/rooms/")} /> },
             ]}
           />
         </div>

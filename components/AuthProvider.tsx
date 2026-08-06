@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useState } from "react";
 import { User } from "../types/user";
 
+
 const STORAGE_KEY = "livechat-auth-user";
 const DEFAULT_AVATAR_COLOR = "#6C8EFF";
 
