@@ -1,5 +1,6 @@
 import { api } from "./api";
 import { Room } from "@/types/room";
+import { Message } from "@/types/message";
 
 export async function listRooms(): Promise<Room[]> {
   const { data } = await api.get<Room[]>("/rooms");
@@ -8,6 +9,11 @@ export async function listRooms(): Promise<Room[]> {
 
 export async function getRoom(id: string): Promise<Room> {
   const { data } = await api.get<Room>(`/rooms/${id}`);
+  return data;
+}
+
+export async function listMessages(roomID: string): Promise<Message> {
+  const { data } = await api.get<Message>(`/rooms/${roomID}/message`);
   return data;
 }
 
