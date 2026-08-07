@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import RoomView from "@/components/RoomView";
 import { getRoom, listMessages } from "@/services/room.service";
 import { listTasks } from "@/services/task.service";
-import { getUser, listUsers } from "@/services/user.service";
+import { getUser } from "@/services/user.service";
 import { Room } from "@/types/room";
 
 // All of these hit `optionalAuth` routes on the backend, so this stays a
@@ -27,8 +27,6 @@ export default async function RoomPage({
       notFound();
     }
 
-    const users = await listUsers().catch(() => []);
-
     const dmRoom: Room = {
       id: roomID,
       name: dmPartner!.name,
@@ -43,7 +41,7 @@ export default async function RoomPage({
 
     // TODO: replace with a real 1:1 message history once the backend
     // supports DMs — for now this renders empty and ready to type into.
-    return <RoomView room={dmRoom} tasks={[]} messages={[]} users={users} />;
+    return <RoomView room={dmRoom} tasks={[]} messages={[]} />;
   }
 
   let room: Room;
@@ -55,13 +53,22 @@ export default async function RoomPage({
     return <BackendUnreachable />;
   }
 
-  const [tasks, messages, users] = await Promise.all([
-    listTasks(roomID).catch(() => []),
-    listMessages(roomID).catch(() => []),
-    listUsers().catch(() => []),
+  const [tasks, messages] = await Promise.all([
+    listTasks(roomID).catch(
+      () => [] as Awaited<ReturnType<typeof listTasks>>,
+    ),
+    listMessages(roomID).catch(
+      () => [] as unknown as Awaited<ReturnType<typeof listMessages>>,
+    ),
   ]);
 
-  return <RoomView room={room} tasks={tasks} messages={messages} users={users} />;
+  const normalizedMessages = ensureArray(messages);
+
+  return <RoomView room={room} tasks={tasks} messages={normalizedMessages} />;
+}
+
+function ensureArray<T>(value: T | T[]): T[] {
+  return Array.isArray(value) ? value : [value];
 }
 
 function BackendUnreachable() {
