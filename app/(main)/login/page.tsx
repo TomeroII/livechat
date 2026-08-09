@@ -115,7 +115,7 @@ function LoginPageInner() {
         </Link>
         <div className="relative">
           <p className="text-3xl leading-tight mb-3" style={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
-            &ldquo;raw mssql for now, we can swap to an ORM later if it gets messy&rdquo;
+            Connect with your team in real-time.
           </p>
           <p className="text-sm" style={{ color: "var(--color-text-faint)", fontFamily: "var(--font-mono)" }}>
             — StudyHub Capstone, #general

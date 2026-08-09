@@ -46,7 +46,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body>
         <AntdRegistry>

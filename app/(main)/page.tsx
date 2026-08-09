@@ -24,7 +24,7 @@ export default function Home() {
               fontFamily: "var(--font-mono)",
             }}
           >
-            Now in beta
+            Now in beta my nigga check it out yurrrr
           </span>
           <h1
             className="text-5xl sm:text-6xl leading-[1.05] mb-6"
